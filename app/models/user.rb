@@ -9,7 +9,7 @@ class User < ApplicationRecord
       find_or_create_by!(email: auth.info.email) do |user|
         user.provider = auth.provider
         user.uid = auth.uid
-        user.name = auth.name
+        user.name = auth.info.name
         user.email = auth.info.email
         password = Devise.friendly_token[0..5]
         logger.debug password
