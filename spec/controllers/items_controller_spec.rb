@@ -11,12 +11,23 @@ describe ItemsController, type: :controller do
           expect(response).to render_template :index
       end
       it "assgins the requested item to @item" do
-          item = create(:item, seller_id: user.id, buyer_id: user.id, category_id: category.id, brand_id: brand.id)
+          item = create(:item,
+                         seller_id: user.id,
+                         buyer_id: user.id,
+                         category_id: category.id,
+                         brand_id: brand.id
+                       )
           get :index
           expect(assigns(:items)).to eq([item])
       end
       it "populates an array of items ordered by created_at DESC" do
-          items = create_list(:item, 4, seller_id: user.id, buyer_id: user.id, category_id: category.id, brand_id: brand.id)
+          items = create_list(:item,
+                               4,
+                               seller_id: user.id,
+                               buyer_id: user.id,
+                               category_id: category.id,
+                               brand_id: brand.id
+                             )
           get :index
           expect(assigns(:items)).to match(items.sort{ |a, b| b.created_at <=> a.created_at } )
       end
@@ -35,8 +46,8 @@ describe ItemsController, type: :controller do
              item: attributes_for(:item,
                                    buyer_id: user.id,
                                    seller_id: user.id,
-                                    brand_id: brand.id,
-                                    category_id: category.id
+                                   brand_id: brand.id,
+                                   category_id: category.id
                                   )
       }.to change(Item, :count).by(1)
     end
